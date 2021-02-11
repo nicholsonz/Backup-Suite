@@ -3,7 +3,6 @@
 #
 ########################################################
 MNTPNT='/mnt/backup'
-CURRENT_YEAR=`date +%Y`
 BACKUP_PATH=${MNTPNT}/$(hostname)/${current_year}
 #######################################################
 
