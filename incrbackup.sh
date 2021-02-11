@@ -3,8 +3,8 @@
 #
 ########################################################
 MNTPNT='/mnt/backup'
-current_year=`date +%Y`
-backup_path=${MNTPNT}/$(hostname)/${current_year}
+CURRENT_YEAR=`date +%Y`
+BACKUP_PATH=${MNTPNT}/$(hostname)/${current_year}
 #######################################################
 
 
@@ -32,16 +32,16 @@ if ! mountpoint -q ${MNTPNT}/; then
 	exit 1
 fi
 
-echo "**** Backup storage directory path is ${backup_path} ****"
+echo "**** Backup storage directory path is ${BACKUP_PATH} ****"
 echo
 echo "--------- Starting backup of /home . . . ----------"
 echo
 
 # Create the target directory path if it does not already exist.
-mkdir --parents ${backup_path}/home
+mkdir --parents ${BACKUP_PATH}/home
 
 # backup using rsync
-sudo rsync --perms --archive --verbose --human-readable --itemize-changes --progress --delete --delete-excluded --exclude='.dbus' --exclude='Examples' --exclude='.local' --exclude='.thumbnails' --exclude='transient-items' --exclude='.cache' --exclude='Steam' --exclude='.steam' --exclude='.zenmap' --exclude='.bash*' --exclude='mail/' /home ${backup_path}/ 
+sudo rsync --perms --archive --verbose --human-readable --itemize-changes --progress --delete --delete-excluded --exclude='.dbus' --exclude='Examples' --exclude='.local' --exclude='.thumbnails' --exclude='transient-items' --exclude='.cache' --exclude='Steam' --exclude='.steam' --exclude='.zenmap' --exclude='.bash*' --exclude='mail/' /home ${BACKUP_PATH}/ 
 
 echo
 echo "---------------------------------------------------"
@@ -49,10 +49,10 @@ echo
 echo "--------- Starting backup of /etc . . . -----------"
 echo
 # Create the target directory path if it does not already exist.
-mkdir --parents ${backup_path}/etc
+mkdir --parents ${BACKUP_PATH}/etc
 
 
-sudo rsync --perms --archive --verbose --human-readable --itemize-changes --progress --delete --delete-excluded /etc ${backup_path}/ 
+sudo rsync --perms --archive --verbose --human-readable --itemize-changes --progress --delete --delete-excluded /etc ${BACKUP_PATH}/ 
 
 # print staus of backup to screen and log file
 if test -e "${MNTPNT}/$(hostname)/rsync-output.log"; then
