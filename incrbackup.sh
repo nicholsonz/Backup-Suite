@@ -54,4 +54,4 @@ else
 	echo "New log file created!"
 fi
 
-
+exit 0
