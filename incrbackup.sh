@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# Sript to backup personal files to an external USB drive.
+# Backup personl files/dirs to local drive
 #
 ########################################################
 MNTPNT='/mnt/backup'
-BACKUP_PATH=${MNTPNT}/$(hostname)/${current_year}
+BACKUP_PATH=${MNTPNT}/$(hostname)
 #######################################################
 
 
