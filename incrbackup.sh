@@ -1,8 +1,9 @@
 #!/bin/bash
 #
-# Sript to backup personal files to an external USB drive.
+# Sript to backup personal files to an internal/external drive.
+# can be used with cron to create daily incremental backups
 #
-#
+
 MNTPNT='/mnt/backup'
 BACKUP_PATH=${MNTPNT}/$(hostname)
 
