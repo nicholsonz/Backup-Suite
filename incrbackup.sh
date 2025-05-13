@@ -43,7 +43,7 @@ echo "-------- Starting backup of /var . . . ------------"
 echo
 
 mkdir --parents ${BACKUP_PATH}/var
-rsync --perms --archive --verbose --human-readable --itemize-changes --progress --delete-excluded --exclude='.Trash-1000' --exclude='*.mp4' /var/www ${BACKUP_PATH}/var/
+rsync --perms --archive --verbose --human-readable --itemize-changes --progress --delete-excluded --exclude='.Trash-1000' /var/www ${BACKUP_PATH}/var/
 
 echo
 echo "--------- Starting backup of /srv . . . ----------"
