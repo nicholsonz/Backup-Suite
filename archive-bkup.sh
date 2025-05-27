@@ -7,6 +7,17 @@ TODAY=$(date +"%a")
 LOGFILE="$BACKUP_DIR/arcvdbkp.log"
 BACKUP_FILES="/home /etc /var/www /srv"
 
+# Check if backup dir exists and if not create it        
+if [ -d $BACKUP_DIR ]; then
+  echo "Backup directory exists... Backing up dirs/files now."
+ elif [ ! -d $BACKUP_DIR ]; then
+  echo "Creating backup directory."
+   mkdir $BACKUP_DIR
+ else
+  echo "Error!  Cannot create backup dir. Check dir permissions or backup drive availability."
+ exit 1
+fi
+
 echo "****************************"
 echo "*** Delete Aging Backups ***"
 echo
@@ -33,16 +44,6 @@ echo
 echo "*** Finished Deleting Aged Backups ***"  
 echo "**************************************"
 echo
-        
-if [ -d $BACKUP_DIR ]; then
-  echo "Backup directory exists... Backing up dirs/files now."
- elif [ ! -d $BACKUP_DIR ]; then
-  echo "Creating backup directory."
-   mkdir $BACKUP_DIR
- else
-  echo "Error!  Cannot create backup dir. Check dir permissions or backup drive availability."
- exit 1
-fi
 
 echo
 echo "##############################################################"
