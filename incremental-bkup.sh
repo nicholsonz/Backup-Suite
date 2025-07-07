@@ -11,7 +11,7 @@ BACKUP_PATH=${MNTPNT}/$(hostname)
 echo "############################################"
 echo "Start Incremental Backup $(date)" 
 echo "############################################"
-echo
+echo ""
 
 if [ ! -d $MNTPNT ]; then
 	echo "Drive not mounted! Cannot run backup without backup volume!"
@@ -19,46 +19,51 @@ if [ ! -d $MNTPNT ]; then
 fi
 
 echo "**** Backup storage directory path is ${BACKUP_PATH} ****"
-echo
+echo ""
 echo "--------- Starting backup of /home . . . ----------"
-echo
+echo ""
 
 mkdir --parents ${BACKUP_PATH}/home
 rsync --perms --archive --verbose --human-readable --itemize-changes --delete-excluded --exclude='.cache' --exclude='Downloads/' /home ${BACKUP_PATH}/ 
 
-echo
+echo ""
 echo "---------------------------------------------------"
-echo
+echo ""
 echo "--------- Starting backup of /etc . . . -----------"
-echo
+echo ""
 
 mkdir --parents ${BACKUP_PATH}/etc
 rsync --perms --archive --verbose --human-readable --itemize-changes --delete-excluded /etc ${BACKUP_PATH}/ 
 
-echo
+echo ""
 echo "---------------------------------------------------"
-echo
+echo ""
 echo "-------- Starting backup of /var . . . ------------"
-echo
+echo ""
 
 mkdir --parents ${BACKUP_PATH}/var
 rsync --perms --archive --verbose --human-readable --itemize-changes --delete-excluded --exclude='.Trash-1000' /var/www ${BACKUP_PATH}/var/
 
-echo
+echo ""
 echo "---------------------------------------------------"
-echo
+echo ""
 echo "--------- Starting backup of /srv . . . ----------"
-echo
+echo ""
 
 mkdir --parents ${BACKUP_PATH}/srv
 rsync --perms --archive --verbose --human-readable --itemize-changes --delete-excluded /srv ${BACKUP_PATH}/
 
-echo
+echo ""
 echo "---------------------------------------------------"
-echo
+echo ""
 
+echo "##########  Directory Listing  ###########"
+echo ""
 
-echo
+ls -lh $BACKUP_PATH/
+
+echo ""
+echo ""
 echo "##################################################"
 echo "Incremental Backup Completed! $(date)  "
 echo "##################################################" 

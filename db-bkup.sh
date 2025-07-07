@@ -91,22 +91,22 @@ fi
 
 
 
-echo
+echo ""
 
-echo
+echo ""
 echo "##########  Directory Listing  ###########"
-echo
+echo ""
 echo "**** Backup Directories ****"
  ls -lh $BKUP_DIR/
-echo
-echo
+echo ""
+echo ""
 echo "**** Backup Files **********"
  ls -lh $BKUP_PATH/
 
 if test -e "$LOGFILE"; then
 	echo "$(date) Success!" >> "$LOGFILE"
 
-echo
+echo ""
 echo "##################################################"
 echo "DB Backup Completed! $(date)  "
 echo "##################################################" 

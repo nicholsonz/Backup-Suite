@@ -18,10 +18,10 @@ if [ -d $BACKUP_DIR ]; then
  exit 1
 fi
 
-echo "****************************"
-echo "*** Delete Aging Backups ***"
-echo
-echo
+echo "****************************************************"
+echo "*************** Delete Aging Backups ***************"
+echo ""
+echo ""
 
 if [ -f $BACKUP_DIR/$TODAY.tgz ]; then
    echo "Deleting old daily backups..."
@@ -40,19 +40,19 @@ if [ -f $BACKUP_DIR/$YROLD_MNTH.tgz ]; then
    echo "No old monthly backups to delete..."
 fi  
 
-echo
-echo "*** Finished Deleting Aged Backups ***"  
-echo "**************************************"
-echo
+echo ""
+echo "********** Finished Deleting Aged Backups **********"  
+echo "****************************************************"
+echo ""
 
-echo
+echo ""
 echo "##############################################################"
 echo "Start Archive Backup! $(date)"
 echo "##############################################################"
 
-echo
+echo ""
 echo "Backing up $BACKUP_FILES to $BACKUP_DIR/$TODAY.tgz"
-echo
+echo ""
 
 
 if [ ! -e $BACKUP_DIR/$TODAY.tgz ]; then
@@ -76,16 +76,16 @@ MONTH=$(date +%B-%Y)
      echo "Monthly backup already exists."  
  fi
 
-echo
-echo "##########  Directory Listing  ###########"
-echo
+echo ""
+echo "####################  Directory Listing  #####################"
+echo ""
 
 ls -lh $BACKUP_DIR/
 
 if test -e "$BACKUP_DIR/arcvdbkp.log"; then
- echo
+ ech ""o
  echo "##############################################################"
- echo "  Archived Backup Completed! $(date)"
+ echo "Archived Backup Completed! $(date)"
  echo "##############################################################" 
 
 else
