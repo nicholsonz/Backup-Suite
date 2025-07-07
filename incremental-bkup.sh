@@ -35,7 +35,6 @@ echo
 mkdir --parents ${BACKUP_PATH}/etc
 rsync --perms --archive --verbose --human-readable --itemize-changes --delete-excluded /etc ${BACKUP_PATH}/ 
 
-
 echo
 echo "---------------------------------------------------"
 echo
@@ -43,8 +42,10 @@ echo "-------- Starting backup of /var . . . ------------"
 echo
 
 mkdir --parents ${BACKUP_PATH}/var
-rsync --perms --archive --verbose --human-readable --itemize-changes --progress --delete-excluded --exclude='.Trash-1000' /var/www ${BACKUP_PATH}/var/
+rsync --perms --archive --verbose --human-readable --itemize-changes --delete-excluded --exclude='.Trash-1000' /var/www ${BACKUP_PATH}/var/
 
+echo
+echo "---------------------------------------------------"
 echo
 echo "--------- Starting backup of /srv . . . ----------"
 echo
