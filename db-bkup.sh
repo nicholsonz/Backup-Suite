@@ -80,11 +80,15 @@ if [ -d "$FULLDBBKP_DIR" ]; then
 	echo "Performing full backup . . . "
 	rm -rf $FULLDBBKP_DIR/fullbkp
 	mariabackup --backup --target-dir=$FULLDBBKP_DIR/fullbkp --user=$dbuser --password=$dbpasswd > /dev/null 2>&1 
+  echo ""
+  echo "Full Backup Successfully Completed!"
 	sleep 3
 elif [ ! -d "$FULLDBBKP_DIR" ]; then
   mkdir -p $FULLDBBKP_DIR/fullbkp
   echo "Performing full backup . . ."
   mariabackup --backup --target-dir=$FULLDBBKP_DIR/fullbkp --user=$dbuser --password=$dbpasswd > /dev/null 2>&1
+  echo ""
+  echo "Full Backup Successfully Completed!"
   sleep 3
 else
 	echo "--- MariaDB backup encountered errors! ---"
@@ -93,7 +97,7 @@ fi
 
 echo ""
 echo ""
-echo "##########  Directory Listing  ###########"
+echo "##############  Directory Listing  ###############"
 echo ""
 echo "********** Backup Directories **********"
 echo ""
