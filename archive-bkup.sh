@@ -59,7 +59,7 @@ echo ""
 
 # Daily backups
 if [ ! -e $BACKUP_DIR/$TODAY.tgz ]; then
-  echo "Making daily backup of $DAY"
+  echo "Making daily backup of $DAY . . . "
   tar czp --exclude="*[Cc]ache*" --exclude="[Tt]rash"  --exclude="$BACKUP_DIR" --exclude="/home/*/Downloads" -f $BACKUP_DIR/$TODAY.tgz $BACKUP_FILES 2>/dev/null
 else
   echo "Daily backup already exists."  
@@ -70,7 +70,7 @@ fi
 DAY_NUM=$(date +%u)
 MONTH=$(date +%B-%Y)
   if [ ! -e $BACKUP_DIR/$MONTH.tgz ]; then
-     echo "Making monthly backup of $MONTH"
+     echo "Making monthly backup of $MONTH . . . "
      cp $BACKUP_DIR/$TODAY.tgz $BACKUP_DIR/$MONTH.tgz
 
   else 
