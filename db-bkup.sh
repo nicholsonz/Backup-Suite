@@ -36,12 +36,12 @@ backup_db=$1
     BKUP_PATH=$BKUP_DIR/all
     [[ ! -d "$BKUP_PATH" ]] && mkdir -p "$BKUP_PATH"
   	echo "   Creating $BKUP_PATH/$TODAY.sql.gz"
-    /usr/bin/mysqldump --all-databases -u"admin" -p"nich4893" | gzip -9 > $BKUP_PATH/$TODAY.sql.gz
+    /usr/bin/mysqldump --all-databases -u"$dbuser" -p"$dbpasswd" | gzip -9 > $BKUP_PATH/$TODAY.sql.gz
   else
     BKUP_PATH=$BKUP_DIR/$db
     [[ ! -d "$BKUP_PATH" ]] && mkdir -p "$BKUP_PATH"
   	echo "   Creating $BKUP_PATH/$TODAY.sql.gz"
-    /usr/bin/mysqldump -u"admin" -p"nich4893" $db | gzip -9 > $BKUP_PATH/$TODAY.sql.gz
+    /usr/bin/mysqldump -u"$dbuser" -p"$dbpasswd" $db | gzip -9 > $BKUP_PATH/$TODAY.sql.gz
   fi
 
 # make monthly backups
@@ -79,6 +79,11 @@ if [ -d "$FULLDBBKP_DIR" ]; then
 	rm -rf $FULLDBBKP_DIR/fullbkp
 	mariabackup --backup --target-dir=$FULLDBBKP_DIR/fullbkp --user=$dbuser --password=$dbpasswd > /dev/null 2>&1 
 	sleep 3
+elif [ ! -d "$FULLDBBKP_DIR" ]; then
+  mkdir -p $FULLDBBKP_DIR/fullbkp
+  echo "Performing full backup . . ."
+  mariabackup --backup --target-dir=$FULLDBBKP_DIR/fullbkp --user=$dbuser --password=$dbpasswd > /dev/null 2>&1
+  sleep 3
 else
 	echo "--- MariaDB backup encountered errors! ---"
 	sleep 5
