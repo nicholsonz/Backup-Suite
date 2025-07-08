@@ -22,9 +22,11 @@ if test -e "$BKUP_DIR/$LOGFILE"; then
     echo ""
 fi
 
+echo ""
 echo "####################################################"
 echo "Start DB Backup! $(date)"
 echo "####################################################"
+echo ""
 
 function do_backups() {
 
