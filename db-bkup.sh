@@ -10,18 +10,16 @@ dbpasswd=
 dbases=($(/usr/bin/mysql -u"$dbuser" -p"$dbpasswd"  -Bse "show databases" | grep -i -v "_schema" | grep -i -v "sys" | grep -i -v "mysql"))
 
 # Check if backup drive is mounted
-
 if [ ! -d $MNTPNT ]; then
 	echo "$BKUP_DIR does not exist! Cannot run backup without the destination drive/dir mounted!"
-	echo "$(date) Unsuccessful backup!" >> "$BKUP_DIR/$LOGFILE"
 	exit 1
 fi
 
 # Check if log file exists and create it if not.
-
 if test -e "$BKUP_DIR/$LOGFILE"; then
     touch "$BKUP_DIR/$LOGFILE"
-    echo "New log file created!"
+    echo "New log file created - $LOGFILE"
+    echo ""
 fi
 
 echo "####################################################"
@@ -75,9 +73,6 @@ done
 echo ""
 echo "############ Full MariaDB backup ###################"
 echo ""
-###
-############ Perform full Mariadb dir backup #############
-###
 
 if [ -d "$FULLDBBKP_DIR" ]; then
 	echo "Performing full backup . . . "
@@ -89,32 +84,32 @@ else
 	sleep 5
 fi
 
-
-
 echo ""
-
 echo ""
 echo "##########  Directory Listing  ###########"
 echo ""
 echo "**** Backup Directories ****"
- ls -lh $BKUP_DIR/
+
+ls -lh $BKUP_DIR/
+
 echo ""
 echo ""
 echo "**** Backup Files **********"
- ls -lh $BKUP_PATH/
 
-if test -e "$LOGFILE"; then
-	echo "$(date) Success!" >> "$LOGFILE"
+ls -lh $BKUP_PATH/
 
-echo ""
-echo "##################################################"
-echo "DB Backup Completed! $(date)  "
-echo "##################################################" 
-
+if [ -f $LOGFILE -a $? -eq 0 ]; then
+	echo "$(date) - SUCCESS!" >> "$LOGFILE"
+  echo ""
+  echo "##################################################"
+  echo "DB Backup Completed! $(date)"
+  echo "##################################################" 
 else
-	touch $LOGFILE 
-	echo "$(date) Success!" >> "$LOGFILE"
-        echo "New log file created!"
+	echo "$(date) - FAILED!" >> "$LOGFILE"
+  echo ""
+  echo "##################################################"
+  echo "DB Backup FAILED! $(date)"
+  echo "##################################################" 
 fi
 
 exit 0 

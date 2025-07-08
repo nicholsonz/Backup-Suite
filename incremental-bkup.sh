@@ -7,18 +7,27 @@
 MNTPNT='/mnt/backup'
 BACKUP_PATH=${MNTPNT}/$(hostname)
 
-
-echo "############################################"
+echo ""
+echo ""
+echo "##########################################################"
 echo "Start Incremental Backup $(date)" 
-echo "############################################"
+echo "##########################################################"
 echo ""
 
-if [ ! -d $MNTPNT ]; then
+# Check if backup drive is mounted at the mount point
+if [ ! -d "$MNTPNT" ] || [ -z "$MNTPNT" ]; then
 	echo "Drive not mounted! Cannot run backup without backup volume!"
+	echo "Check that backup drive is mounted at $MNTPNT. If not then mount drive (e.g. sudo mount /dev/sdb /mnt/backup) and run script again."
 	exit 1
 fi
+# Check if backup log exists and if not create it
+if [ ! -f ${MNTPNT}/$(hostname)/rsync-output.log ]; then
+	touch ${MNTPNT}/$(hostname)/rsync-output.log
+       	echo "New log file created - ${MNTPNT}/$(hostname)/rsync-output.log"
+		echo ""
+fi
 
-echo "**** Backup storage directory path is ${BACKUP_PATH} ****"
+echo "**** Backup directory path is ${BACKUP_PATH} ****"
 echo ""
 echo "--------- Starting backup of /home . . . ----------"
 echo ""
@@ -62,19 +71,22 @@ echo ""
 
 ls -lh $BACKUP_PATH/
 
-echo ""
-echo ""
-echo "##################################################"
-echo "Incremental Backup Completed! $(date)  "
-echo "##################################################" 
-
-if test -e "${MNTPNT}/$(hostname)/rsync-output.log"; then
-	echo "$(date) Success!" >> "${MNTPNT}/$(hostname)/rsync-output.log"
+if [ -f ${MNTPNT}/$(hostname)/rsync-output.log -a $? -eq 0 ]; then
+	echo "$(date) - SUCCESS!" >> "${MNTPNT}/$(hostname)/rsync-output.log"
+	echo ""
+	echo ""
+	echo "################################################################"
+	echo "Incremental Backup Completed! $(date)"
+	echo "################################################################" 
 else
-	touch ${MNTPNT}/$(hostname)/rsync-output.log 
-	echo "$(date) Success!" >> "${MNTPNT}/$(hostname)/rsync-output.log"
-        echo "New log file created!"
+	echo "$(date) - FAILED!" >> "${MNTPNT}/$(hostname)/rsync-output.log"
+	echo ""
+	echo ""
+	echo "################################################################"
+	echo "Incremental Backup FAILED! $(date)"
+	echo "################################################################" 
 fi
+
 
 exit 0 
 

@@ -7,6 +7,11 @@ TODAY=$(date +"%a")
 LOGFILE="$BACKUP_DIR/arcvdbkp.log"
 BACKUP_FILES="/home /etc /var/www /srv"
 
+echo ""
+echo "##############################################################"
+echo "Start Archive Backup! $(date)"
+echo "##############################################################"
+echo ""
 # Check if backup dir exists and if not create it        
 if [ -d $BACKUP_DIR ]; then
   echo "Backup directory exists... Backing up dirs/files now."
@@ -18,8 +23,8 @@ if [ -d $BACKUP_DIR ]; then
  exit 1
 fi
 
-echo "****************************************************"
-echo "*************** Delete Aging Backups ***************"
+echo ""
+echo "**************** Delete Aging Backups ****************"
 echo ""
 echo ""
 
@@ -41,15 +46,12 @@ if [ -f $BACKUP_DIR/$YROLD_MNTH.tgz ]; then
 fi  
 
 echo ""
-echo "********** Finished Deleting Aged Backups **********"  
-echo "****************************************************"
+echo "********** Finished Deleting Aged Backups ************"  
+echo "******************************************************"
 echo ""
 
 echo ""
-echo "##############################################################"
-echo "Start Archive Backup! $(date)"
-echo "##############################################################"
-
+echo "*************** Begin Backup Operation ***************" 
 echo ""
 echo "Backing up $BACKUP_FILES to $BACKUP_DIR/$TODAY.tgz"
 echo ""
@@ -82,15 +84,18 @@ echo ""
 
 ls -lh $BACKUP_DIR/
 
-if test -e "$BACKUP_DIR/arcvdbkp.log"; then
- ech ""o
- echo "##############################################################"
- echo "Archived Backup Completed! $(date)"
- echo "##############################################################" 
-
+if [ -f $LOGFILE -a $? -eq 0 ]; then
+	echo "$(date) - SUCCESS!" >> "$LOGFILE"
+  echo ""
+  echo "##############################################################"
+  echo "Archived Backup Completed! $(date)"
+  echo "##############################################################" 
 else
-	touch "$BACKUP_DIR/arcvdbkp.log"
-	echo "New log file created!"
+	echo "$(date) - FAILED!" >> "$LOGFILE"
+  echo ""
+  echo "##############################################################"
+  echo "Archived Backup FAILED! $(date)"
+  echo "##############################################################" 
 fi
 
 exit 0
