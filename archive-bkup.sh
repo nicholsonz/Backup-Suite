@@ -56,14 +56,11 @@ echo ""
 echo "Backing up $BACKUP_FILES to $BACKUP_DIR/$TODAY.tgz"
 echo ""
 
-
+# Daily backups
 if [ ! -e $BACKUP_DIR/$TODAY.tgz ]; then
-tar czp --exclude="*[Cc]ache*" --exclude="[Tt]rash"  --exclude="$BACKUP_DIR" --exclude="/home/*/Downloads" --exclude="*.mp4" -f $BACKUP_DIR/$TODAY.tgz $BACKUP_FILES 2>/dev/null
-  echo "$(date) Successful backup!" >> "$BACKUP_DIR/arcvdbkp.log"  
+  tar czp --exclude="*[Cc]ache*" --exclude="[Tt]rash"  --exclude="$BACKUP_DIR" --exclude="/home/*/Downloads" --exclude="*.mp4" -f $BACKUP_DIR/$TODAY.tgz $BACKUP_FILES 2>/dev/null
 else
-  echo "Daily backup already exists."
-  echo "$(date) Backup not successful!" >> "$BACKUP_DIR/arcvdbkp.log"
-  
+  echo "Daily backup already exists."  
 fi
 
 
@@ -72,7 +69,7 @@ DAY_NUM=$(date +%u)
 MONTH=$(date +%B-%Y)
   if [ ! -e $BACKUP_DIR/$MONTH.tgz ]; then
      echo "Making monthly backup of $MONTH"
-    cp $BACKUP_DIR/$TODAY.tgz $BACKUP_DIR/$MONTH.tgz
+     cp $BACKUP_DIR/$TODAY.tgz $BACKUP_DIR/$MONTH.tgz
 
   else 
      echo "Monthly backup already exists."  
