@@ -93,13 +93,15 @@ echo ""
 echo ""
 echo "##########  Directory Listing  ###########"
 echo ""
-echo "**** Backup Directories ****"
+echo "********** Backup Directories **********"
+echo ""
 
 ls -lh $BKUP_DIR/
 
 echo ""
 echo ""
-echo "**** Backup Files **********"
+echo "*********** Backup Files ***************"
+echo ""
 
 ls -lh $BKUP_PATH/
 
