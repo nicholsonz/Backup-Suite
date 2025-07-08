@@ -60,7 +60,7 @@ echo ""
 # Daily backups
 if [ ! -e $BACKUP_DIR/$TODAY.tgz ]; then
   echo "Making daily backup of $DAY"
-  tar czp --exclude="*[Cc]ache*" --exclude="[Tt]rash"  --exclude="$BACKUP_DIR" --exclude="/home/*/Downloads" --exclude="*.mp4" -f $BACKUP_DIR/$TODAY.tgz $BACKUP_FILES 2>/dev/null
+  tar czp --exclude="*[Cc]ache*" --exclude="[Tt]rash"  --exclude="$BACKUP_DIR" --exclude="/home/*/Downloads" -f $BACKUP_DIR/$TODAY.tgz $BACKUP_FILES 2>/dev/null
 else
   echo "Daily backup already exists."  
 fi
