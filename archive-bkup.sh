@@ -34,9 +34,10 @@ echo ""
 if [ -f $BACKUP_DIR/$TODAY.tgz ]; then
    echo "Deleting old daily backups..."
    echo ""
-   echo "$BACKUP_DIR/$TODAY.tgz"
-   echo ""
     rm $BACKUP_DIR/$TODAY.tgz
+   echo "Deleted $BACKUP_DIR/$TODAY.tgz"
+   echo ""
+   sleep 3
   else
    echo "No old daily backups to delete..."
 fi
@@ -45,9 +46,10 @@ YROLD_MNTH=$(date +%B-%Y --date="last year")
 if [ -f $BACKUP_DIR/$YROLD_MNTH.tgz ]; then
    echo "Deleting old monthly backups..."
    echo ""
-   echo "rm $BACKUP_DIR/$YROLD_MNTH.tgz"
-   echo ""
     rm $BACKUP_DIR/$YROLD_MNTH.tgz
+   echo "Deleted $BACKUP_DIR/$YROLD_MNTH.tgz"
+   echo ""
+   sleep 3
   else
    echo "No old monthly backups to delete..."
 fi  
