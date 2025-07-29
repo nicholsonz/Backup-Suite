@@ -26,6 +26,13 @@ if [ -d $BACKUP_DIR ]; then
  exit 1
 fi
 
+# Check if backup log exists and if not create it
+if [ ! -f $LOGFILE ]; then
+	touch $LOGFILE
+       	echo "New log file created - $LOGFILE"
+		echo ""
+fi
+
 echo ""
 echo "**************** Delete Aging Backups ****************"
 echo ""
@@ -91,18 +98,19 @@ echo ""
 
 ls -lh $BACKUP_DIR/
 
-if [ -f $LOGFILE -a $? -eq 0 ]; then
-	echo "$(date) - SUCCESS!" >> "$LOGFILE"
-  echo ""
-  echo "##############################################################"
-  echo "Archived Backup Completed! $(date)"
-  echo "##############################################################" 
-else
+if [ $? -ne 0 ]; then
 	echo "$(date) - FAILED!" >> "$LOGFILE"
   echo ""
   echo "##############################################################"
   echo "Archived Backup FAILED! $(date)"
   echo "##############################################################" 
+else
+	echo "$(date) - SUCCESS!" >> "$LOGFILE"
+  echo ""
+  echo "##############################################################"
+  echo "Archived Backup Completed! $(date)"
+  echo "##############################################################" 
+  
 fi
 
 exit 0

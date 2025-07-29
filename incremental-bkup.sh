@@ -31,9 +31,11 @@ echo "**** Backup directory path is ${BACKUP_PATH} ****"
 echo ""
 echo "--------- Starting backup of /home . . . ----------"
 echo ""
-
-mkdir --parents ${BACKUP_PATH}/home
-rsync --perms --archive --verbose --human-readable --itemize-changes --delete-excluded --exclude='.cache' --exclude='Downloads/' /home ${BACKUP_PATH}/ 
+if [ ! -d ${BACKUP_DIR}/home ]; then
+	mkdir --parents ${BACKUP_PATH}/home
+else
+	rsync --perms --archive --verbose --human-readable --itemize-changes --delete-excluded --exclude='.cache' --exclude='Downloads/' /home ${BACKUP_PATH}/ 
+fi
 
 echo ""
 echo "---------------------------------------------------"
@@ -41,8 +43,12 @@ echo ""
 echo "--------- Starting backup of /etc . . . -----------"
 echo ""
 
-mkdir --parents ${BACKUP_PATH}/etc
+if [ ! -d ${BACKUP_DIR}/etc ]; then
+	mkdir --parents ${BACKUP_PATH}/etc
+else
 rsync --perms --archive --verbose --human-readable --itemize-changes --delete-excluded /etc ${BACKUP_PATH}/ 
+
+fi
 
 echo ""
 echo "---------------------------------------------------"
@@ -50,8 +56,12 @@ echo ""
 echo "-------- Starting backup of /var . . . ------------"
 echo ""
 
-mkdir --parents ${BACKUP_PATH}/var
+if [ ! -d ${BACKUP_DIR}/var ]; then
+	mkdir --parents ${BACKUP_PATH}/var
+else
 rsync --perms --archive --verbose --human-readable --itemize-changes --delete-excluded --exclude='.Trash-1000' /var/www ${BACKUP_PATH}/var/
+
+fi
 
 echo ""
 echo "---------------------------------------------------"
@@ -59,8 +69,12 @@ echo ""
 echo "--------- Starting backup of /srv . . . ----------"
 echo ""
 
-mkdir --parents ${BACKUP_PATH}/srv
+if [ ! -d ${BACKUP_DIR}/srv ]; then
+	mkdir --parents ${BACKUP_PATH}/srv
+else
 rsync --perms --archive --verbose --human-readable --itemize-changes --delete-excluded /srv ${BACKUP_PATH}/
+
+fi
 
 echo ""
 echo "---------------------------------------------------"
@@ -71,23 +85,20 @@ echo ""
 
 ls -lh $BACKUP_PATH/
 
-if [ -f ${MNTPNT}/$(hostname)/rsync-output.log -a $? -eq 0 ]; then
-	echo "$(date) - SUCCESS!" >> "${MNTPNT}/$(hostname)/rsync-output.log"
-	echo ""
-	echo ""
-	echo "################################################################"
-	echo "Incremental Backup Completed! $(date)"
-	echo "################################################################" 
-else
+if [ $? -ne 0 ]; then
 	echo "$(date) - FAILED!" >> "${MNTPNT}/$(hostname)/rsync-output.log"
 	echo ""
 	echo ""
 	echo "################################################################"
 	echo "Incremental Backup FAILED! $(date)"
 	echo "################################################################" 
+else
+	echo "$(date) - SUCCESS!" >> "${MNTPNT}/$(hostname)/rsync-output.log"
+	echo ""
+	echo ""
+	echo "################################################################"
+	echo "Incremental Backup Completed! $(date)"
+	echo "################################################################" 
 fi
 
-
 exit 0 
-
-
