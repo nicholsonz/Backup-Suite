@@ -7,7 +7,7 @@ TODAY=$(date +"%a")
 LOGFILE="$BKUP_DIR/db-backup.log"
 dbuser=
 dbpasswd=
-dbases=$(/usr/bin/mysql -u"$dbuser" -p"$dbpasswd"  -Bse "show databases" | grep -i -v "_schema" | grep -i -v "sys" | grep -i -v "mysql")
+dbases=*($(/usr/bin/mysql -u"$dbuser" -p"$dbpasswd"  -Bse "show databases" | grep -i -v "_schema" | grep -i -v "sys" | grep -i -v "mysql"))
 
 # Check if backup drive is mounted
 if [ ! -d $MNTPNT ]; then
@@ -38,12 +38,12 @@ backup_db=$1
     BKUP_PATH=$BKUP_DIR/all
     [[ ! -d "$BKUP_PATH" ]] && mkdir -p "$BKUP_PATH"
   	echo "   Creating $BKUP_PATH/$TODAY.sql.gz"
-    /usr/bin/mysqldump --all-databases -u"$dbuser" -p"$dbpasswd" | gzip -9 > $BKUP_PATH/$TODAY.sql.gz
+    /usr/bin/mariadb-dump --all-databases -u"$dbuser" -p"$dbpasswd" | gzip -9 > $BKUP_PATH/$TODAY.sql.gz
   else
     BKUP_PATH=$BKUP_DIR/$db
     [[ ! -d "$BKUP_PATH" ]] && mkdir -p "$BKUP_PATH"
   	echo "   Creating $BKUP_PATH/$TODAY.sql.gz"
-    /usr/bin/mysqldump -u"$dbuser" -p"$dbpasswd" $db | gzip -9 > $BKUP_PATH/$TODAY.sql.gz
+    /usr/bin/mariadb-dump -u"$dbuser" -p"$dbpasswd" $db | gzip -9 > $BKUP_PATH/$TODAY.sql.gz
   fi
 
 # make monthly backups
