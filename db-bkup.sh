@@ -7,7 +7,7 @@ TODAY=$(date +"%a")
 LOGFILE="$BKUP_DIR/db-backup.log"
 dbuser=
 dbpasswd=
-dbases=($(/usr/bin/mysql -u"$dbuser" -p"$dbpasswd"  -Bse "show databases" | grep -i -v "_schema" | grep -i -v "sys" | grep -i -v "mysql"))
+dbases=$(/usr/bin/mysql -u"$dbuser" -p"$dbpasswd"  -Bse "show databases" | grep -i -v "_schema" | grep -i -v "sys" | grep -i -v "mysql")
 
 # Check if backup drive is mounted
 if [ ! -d $MNTPNT ]; then
@@ -79,14 +79,14 @@ echo ""
 if [ -d "$FULLDBBKP_DIR" ]; then
 	echo "Performing full backup . . . "
 	rm -rf $FULLDBBKP_DIR/fullbkp
-	mariabackup --backup --target-dir=$FULLDBBKP_DIR/fullbkp --user=$dbuser --password=$dbpasswd > /dev/null 2>&1 
+	mariadb-backup --backup --target-dir=$FULLDBBKP_DIR/fullbkp --user=$dbuser --password=$dbpasswd > /dev/null 2>&1 
   echo ""
   echo "Full Backup Successfully Completed!"
 	sleep 3
 elif [ ! -d "$FULLDBBKP_DIR" ]; then
   mkdir -p $FULLDBBKP_DIR/fullbkp
   echo "Performing full backup . . ."
-  mariabackup --backup --target-dir=$FULLDBBKP_DIR/fullbkp --user=$dbuser --password=$dbpasswd > /dev/null 2>&1
+  mariadb-backup --backup --target-dir=$FULLDBBKP_DIR/fullbkp --user=$dbuser --password=$dbpasswd > /dev/null 2>&1
   echo ""
   echo "Full Backup Successfully Completed!"
   sleep 3
